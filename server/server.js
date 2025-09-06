@@ -42,7 +42,7 @@ app.get('/', (req, res) => {
 });
 
 // Handle undefined routes
-app.use((req, res) => {
+app.use('*splat', (req, res) => {
   res.status(404).json({
     success: false,
     message: `Route ${req.originalUrl} not found`
