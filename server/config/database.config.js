@@ -7,7 +7,7 @@ dotenv.config();
 const connectDB = async () => {
   try {
     // Construct the MongoDB URI using environment variables
-    const dbURI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.kxrin1v.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
+    const dbURI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.kxrin1v.mongodb.net/SpellweaverDB?retryWrites=true&w=majority&appName=Cluster0`;
     
     const conn = await mongoose.connect(dbURI, {
 

@@ -64,12 +64,12 @@ const SpellSchema = new mongoose.Schema({
 
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User", // therapist/admin who created it
+    ref: "User", // therapist/admin/patient who created it
   },
 
   isPublic: {
     type: Boolean,
-    default: true, // can be shared among users
+    default: false, // can be shared among users
   },
 
   usageCount: {
