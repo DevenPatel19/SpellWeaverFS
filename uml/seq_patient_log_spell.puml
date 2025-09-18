@@ -1,0 +1,16 @@
+@startuml
+actor PatientUI
+participant FrontendAPI
+participant "PatientController" as PC
+participant "SpellUse Model" as SU
+database DB
+
+PatientUI -> FrontendAPI : POST /api/patients/{id}/spells {spellId, context}
+FrontendAPI -> PC : logSpellUsage(req)
+PC -> SU : createLog(patientId, spellId, context)
+SU -> DB : insert SpellUse {patient, spell, timestamp, context}
+DB --> SU : insert ok
+SU --> PC : created SpellUse
+PC --> FrontendAPI : 200 OK {log}
+FrontendAPI --> PatientUI : display success
+@enduml

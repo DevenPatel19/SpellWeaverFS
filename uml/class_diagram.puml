@@ -1,0 +1,99 @@
+@startuml
+' Class Diagram - Arcane Wellness Academy (MVP)
+
+class Therapist {
+  +ObjectId _id
+  +String name
+  +String email
+  +String passwordHash
+  +String[] specializations
+  +ObjectId[] patients
+  +getPatientData(therapistId)
+  +getSpellAnalytics(therapistId)
+  +getDashboard(therapistId, days)
+}
+
+class Patient {
+  +ObjectId _id
+  +String name
+  +String email
+  +String passwordHash
+  +ObjectId therapist
+  +SpellUse[] spellsUsed
+  +logSpellUse(patientId, spellId, context)
+  +getHistory(patientId)
+}
+
+class Spell {
+  +ObjectId _id
+  +String name
+  +String description
+  +String category
+  +String[] instructions
+  +String[] tags
+  +ObjectId createdBy
+}
+
+class SpellUse {
+  +ObjectId _id
+  +ObjectId patient
+  +ObjectId spell
+  +Date timestamp
+  +String context
+  +int effectivenessRating
+  +createLog(patientId, spellId, context)
+}
+
+class AuthController {
+  +register(req,res)
+  +login(req,res)
+  +me(req,res)
+}
+
+class PatientController {
+  +getPatient(req,res)
+  +updatePatient(req,res)
+  +logSpellUsage(req,res)
+  +getSpellHistory(req,res)
+}
+
+class TherapistController {
+  +getTherapist(req,res)
+  +updateTherapist(req,res)
+  +getPatients(req,res)
+  +assignSpellToPatient(req,res)
+  +getSpellAnalytics(req,res)
+  +getTherapistDashboard(req,res)
+}
+
+class SpellController {
+  +listSpells(req,res)
+  +getSpell(req,res)
+  +createSpell(req,res)
+  +updateSpell(req,res)
+  +deleteSpell(req,res)
+}
+
+class AdminController {
+  +listUsers(req,res)
+  +updateUserRole(req,res)
+  +platformAnalytics(req,res)
+}
+
+class AIService {
+  +getPersonalizedSpellRecommendations(patientId)
+}
+
+Therapist "1" -- "0..*" Patient : cares_for
+Patient "1" -- "0..*" SpellUse : logs
+Spell "1" -- "0..*" SpellUse : used_in
+Therapist "1" -- "0..*" Spell : creates
+Patient "0..1" -- "0..*" Spell : practiced (via SpellUse)
+
+AuthController ..> PatientController : uses
+AuthController ..> TherapistController : uses
+TherapistController ..> Patient : queries
+TherapistController ..> SpellUse : reads
+PatientController ..> SpellUse : creates
+
+@enduml

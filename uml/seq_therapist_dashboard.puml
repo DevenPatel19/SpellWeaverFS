@@ -1,0 +1,19 @@
+@startuml
+actor TherapistUI
+participant FrontendAPI
+participant "TherapistController" as TC
+participant "Patient Model" as PM
+participant "Aggregation" as AGG
+database DB
+
+TherapistUI -> FrontendAPI : GET /api/therapists/{id}/dashboard?days=30
+FrontendAPI -> TC : getTherapistDashboard(req)
+TC -> PM : find({ therapist: id }).populate('spellsUsed.spell')
+PM -> DB : query patients & spellsUsed
+DB --> PM : patient docs with spellsUsed
+PM --> TC : patients[]
+TC -> AGG : compute spell summary + time-series (in-memory)
+AGG --> TC : analytics object
+TC --> FrontendAPI : 200 OK {patients, spellSummary, spellTimeSeries}
+FrontendAPI --> TherapistUI : render dashboard
+@enduml
