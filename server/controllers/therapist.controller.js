@@ -98,3 +98,40 @@ export const getSpellAnalytics = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
+
+// Assign a therapist to a patient (admin-only)
+export const assignTherapist = async (req, res) => {
+  try {
+    const { patientId, therapistId } = req.params;
+
+    const patient = await User.findById(patientId);
+    const therapist = await User.findById(therapistId);
+
+    if (!patient || patient.role !== "patient") {
+      return res.status(404).json({
+        success: false,
+        message: "Patient not found",
+      });
+    }
+
+    if (!therapist || therapist.role !== "therapist") {
+      return res.status(404).json({
+        success: false,
+        message: "Therapist not found",
+      });
+    }
+
+    // Assign therapist
+    patient.patientProfile.therapist = therapistId;
+    await patient.save();
+
+    res.json({
+      success: true,
+      message: `Therapist ${therapist.name} assigned to patient ${patient.name}`,
+      data: patient,
+    });
+  } catch (error) {
+    console.error("assignTherapist error:", error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+};

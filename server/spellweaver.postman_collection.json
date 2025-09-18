@@ -1,0 +1,128 @@
+{
+  "info": {
+    "name": "Arcane Wellness Academy API",
+    "_postman_id": "arcane-api-002",
+    "description": "Comprehensive Postman collection for testing backend routes on port 5000",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth: Register User",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"name\": \"Test Patient\",\n  \"email\": \"patient@test.com\",\n  \"password\": \"password123\",\n  \"role\": \"patient\"\n}" },
+        "url": { "raw": "http://localhost:5000/api/auth/register", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "auth", "register"] }
+      },
+      "response": []
+    },
+    {
+      "name": "Auth: Login User",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"email\": \"patient@test.com\",\n  \"password\": \"password123\"\n}" },
+        "url": { "raw": "http://localhost:5000/api/auth/login", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "auth", "login"] }
+      },
+      "response": []
+    },
+    {
+      "name": "Auth: Get Current User",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": { "raw": "http://localhost:5000/api/auth/me", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "auth", "me"] }
+      },
+      "response": []
+    },
+    {
+      "name": "Patient: Get Profile",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{patientToken}}" }],
+        "url": { "raw": "http://localhost:5000/api/patients/{{patientId}}", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "patients", "{{patientId}}"] }
+      },
+      "response": []
+    },
+    {
+      "name": "Patient: Update Profile",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{patientToken}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": { "mode": "raw", "raw": "{\n  \"name\": \"Updated Patient Name\"\n}" },
+        "url": { "raw": "http://localhost:5000/api/patients/{{patientId}}", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "patients", "{{patientId}}"] }
+      },
+      "response": []
+    },
+    {
+      "name": "Patient: Practice Spell",
+      "request": {
+        "method": "PATCH",
+        "header": [{ "key": "Authorization", "value": "Bearer {{patientToken}}" }],
+        "url": { "raw": "http://localhost:5000/api/patients/{{patientId}}/practice/{{spellId}}", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "patients", "{{patientId}}", "practice", "{{spellId}}"] }
+      },
+      "response": []
+    },
+    {
+      "name": "Therapist: Get Profile",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{therapistToken}}" }],
+        "url": { "raw": "http://localhost:5000/api/therapists/{{therapistId}}", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "therapists", "{{therapistId}}"] }
+      },
+      "response": []
+    },
+    {
+      "name": "Therapist: Get Assigned Patients",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{therapistToken}}" }],
+        "url": { "raw": "http://localhost:5000/api/therapists/{{therapistId}}/patients", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "therapists", "{{therapistId}}", "patients"] }
+      },
+      "response": []
+    },
+    {
+      "name": "Therapist: Get Spell Analytics",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{therapistToken}}" }],
+        "url": { "raw": "http://localhost:5000/api/therapists/{{therapistId}}/analytics", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "therapists", "{{therapistId}}", "analytics"] }
+      },
+      "response": []
+    },
+    {
+      "name": "Admin: Assign Therapist to Patient",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{adminToken}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": { "mode": "raw", "raw": "{\n  \"therapistId\": \"{{therapistId}}\"\n}" },
+        "url": { "raw": "http://localhost:5000/api/users/{{patientId}}/assign-therapist/{{therapistId}}", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "users", "{{patientId}}", "assign-therapist", "{{therapistId}}"] }
+      },
+      "response": []
+    },
+    {
+      "name": "Admin: Get All Users",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }],
+        "url": { "raw": "http://localhost:5000/api/users", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "users"] }
+      },
+      "response": []
+    },
+    {
+      "name": "Admin: Delete User",
+      "request": {
+        "method": "DELETE",
+        "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }],
+        "url": { "raw": "http://localhost:5000/api/users/{{userId}}", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "users", "{{userId}}"] }
+      },
+      "response": []
+    }
+  ]
+}

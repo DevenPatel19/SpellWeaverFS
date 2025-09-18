@@ -8,20 +8,16 @@ import { protect, authorize } from "../middleware/auth.middleware.js";
 
 const router = express.Router();
 
-// All patient routes require authentication
+// All routes require authentication
 router.use(protect);
 
-// Get patient profile
-router.get("/:id", authorize("admin", "therapist", "patient"), getPatient);
+// Get a patient profile (self, therapist of patient, or admin)
+router.get("/:id", getPatient);
 
-// Update patient profile
-router.put("/:id", authorize("admin", "patient"), updatePatient);
+// Update a patient profile (self or admin)
+router.put("/:id", updatePatient);
 
-// Practice a spell
-router.patch(
-  "/:patientId/practice-spell/:spellId",
-  authorize("patient"),
-  practiceSpell
-);
+// Patient practices a spell
+router.patch("/:patientId/practice/:spellId", authorize("patient", "admin"), practiceSpell);
 
 export default router;

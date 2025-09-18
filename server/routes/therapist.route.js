@@ -3,21 +3,29 @@ import {
   getTherapist,
   getAssignedPatients,
   getSpellAnalytics,
+  assignTherapist,
 } from "../controllers/therapist.controller.js";
 import { protect, authorize } from "../middleware/auth.middleware.js";
 
 const router = express.Router();
 
-// All therapist routes require authentication
+// All routes require authentication
 router.use(protect);
 
-// Get therapist profile
-router.get("/:id", authorize("admin", "therapist"), getTherapist);
+// Therapist profile
+router.get("/:id", getTherapist);
 
-// Get assigned patients
-router.get("/:id/patients", authorize("admin", "therapist"), getAssignedPatients);
+// Assigned patients
+router.get("/:id/patients", authorize("therapist", "admin"), getAssignedPatients);
 
-// Get spell analytics for assigned patients
-router.get("/:id/spell-analytics", authorize("admin", "therapist"), getSpellAnalytics);
+// Spell analytics
+router.get("/:id/analytics", authorize("therapist", "admin"), getSpellAnalytics);
+
+// Admin: assign therapist to patient
+router.patch(
+  "/assign/:patientId",
+  authorize("therapist","admin"),
+  (req, res) => assignTherapist({ ...req, params: { ...req.params, therapistId: req.body.therapistId } }, res)
+);
 
 export default router;

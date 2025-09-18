@@ -64,6 +64,5 @@ app.use((err, req, res, next) => {
 
 // Start Server/Listen for Requests with CLI sanity Test
 app.listen(process.env.PORT, () => {
-    console.log(`listening on : 🦄🦄${PORT}🦄🦄 `);
+    console.log(`Server Started on : 🦄🦄${PORT}🦄🦄 `);
 });
-
