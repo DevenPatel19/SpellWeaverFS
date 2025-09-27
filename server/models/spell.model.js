@@ -17,10 +17,11 @@ const SpellSchema = new mongoose.Schema({
     enum: [
       "Mindfulness",
       "Grounding",
-      "Cognitive",
-      "Behavioral",
+      "Emotional Regulation",
+      "Distress Tolerance",
+      "Cognitive Restructuring",
+      "Self-Compassion",
       "Relaxation",
-      "Expression",
       "Other"
     ],
     required: true,
@@ -29,7 +30,7 @@ const SpellSchema = new mongoose.Schema({
   difficulty: {
     type: String,
     enum: ["Easy", "Moderate", "Challenging"],
-    default: "Easy",
+    default: "Challenging",
   },
 
   duration: {

@@ -1,4 +1,4 @@
-@startuml
+@startuml class_diagram
 ' Class Diagram - Arcane Wellness Academy (MVP)
 
 class Therapist {
