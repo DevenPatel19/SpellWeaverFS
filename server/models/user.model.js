@@ -66,6 +66,7 @@ const UserSchema = new mongoose.Schema(
         default: "Therapist",
       },
       biography: String,
+      npi: { type: Number, unique: true, sparse: true},
       licenseNumber: { type: String, unique: true, sparse: true },
       specialization: [String],
       experienceYears: { type: Number, min: 0, default: 0 },

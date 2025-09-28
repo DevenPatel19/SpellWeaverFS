@@ -73,11 +73,6 @@ const SpellSchema = new mongoose.Schema({
     default: false, // can be shared among users
   },
 
-  usageCount: {
-    type: Number,
-    default: 0, // increment when users practice this skill
-  },
-
   createdAt: {
     type: Date,
     default: Date.now,

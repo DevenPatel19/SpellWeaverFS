@@ -36,6 +36,9 @@ export const getTherapist = async (req, res) => {
   }
 };
 
+//Update therapist profile (self or admin)
+export const updateTherapist = async (req, res) => {}
+
 // GET assigned patients
 export const getAssignedPatients = async (req, res) => {
   try {
